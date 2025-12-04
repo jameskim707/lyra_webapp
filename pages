@@ -1,1 +1,6 @@
 pages/.gitkeep
+pages/01_home.py
+pages/02_stockbot.py
+pages/03_ai_counsel.py
+pages/04_setting.py
+pages/05_about.py
