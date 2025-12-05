@@ -1,19 +1,15 @@
 import streamlit as st
 from utils.groq_client import get_groq_client
 
-def run_ai_counselor():
-    st.title("💛 EmotionCare 3.0 — AI 심리 상담")
-    st.write("지금 마음 상태를 편안하게 도와드릴게요.")
+st.title("💛 EmotionCare 3.0 — AI 심리 상담")
 
-    user_input = st.text_area("지금 어떤 점이 가장 힘드세요?", height=150)
+user_input = st.text_area("지금 어떤 점이 가장 힘드세요?", height=150)
 
-    if st.button("상담 요청하기"):
-        if not user_input:
-            st.warning("내용을 입력해주세요.")
-            return
-
+if st.button("상담 요청하기"):
+    if not user_input:
+        st.warning("내용을 입력해주세요.")
+    else:
         client = get_groq_client()
-
         response = client.chat.completions.create(
             model="gemma2-9b-it",
             messages=[
@@ -21,7 +17,5 @@ def run_ai_counselor():
                 {"role": "user", "content": user_input},
             ],
         )
-
         st.subheader("🧠 AI 상담 답변")
         st.write(response.choices[0].message["content"])
-
