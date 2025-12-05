@@ -187,11 +187,11 @@ if user_input:
     with st.spinner("🤔 AI가 분석 중..."):
         response, emotion_score = groq_client.chat(messages)
         
-        # 위험도 계산 (간단 버전)
+        # 위험도 계산
         if emotion_score is None:
             emotion_score = 5.0
         
-        risk_score = emotion_score * 1.2  # 0~12 범위를 0~10으로 조정
+        risk_score = emotion_score * 1.2
         if risk_score > 10:
             risk_score = 10.0
         
@@ -199,3 +199,27 @@ if user_input:
         st.session_state.guardian_chat.append({
             'role': 'assistant',
             'content': response,
+            'meta': {
+                'risk': risk_score,
+                'emotion': emotion_score
+            }
+        })
+    
+    st.rerun()
+
+# 안내
+st.markdown("---")
+st.markdown("""
+<div style="background: #fff3cd; padding: 1rem; border-radius: 10px;">
+<strong>💡 사용 팁:</strong>
+<ul>
+<li>솔직하게 감정을 표현하세요</li>
+<li>종목명을 구체적으로 말씀하세요</li>
+<li>계속 대화가 가능합니다</li>
+</ul>
+</div>
+""", unsafe_allow_html=True)
+
+# 푸터
+st.markdown("---")
+st.caption("🛡️ GINI Guardian v4.5 MIRACLE Edition | Built by MIRACLE (Claude)")
