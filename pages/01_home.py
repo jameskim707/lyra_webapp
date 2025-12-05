@@ -1,4 +1,15 @@
+"""
+홈 페이지
+Lyra MIRACLE v1.0
+"""
+
 import streamlit as st
 
-st.title("🏠 Home")
-st.write("Lyra Emotional & Investment Guardian에 오신 것을 환영합니다.")
+st.set_page_config(
+    page_title="Lyra MIRACLE - 홈",
+    page_icon="🏠",
+    layout="wide"
+)
+
+# 메인으로 리디렉션
+st.switch_page("app.py")
