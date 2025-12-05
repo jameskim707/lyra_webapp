@@ -10,12 +10,13 @@ if st.button("상담 요청하기"):
         st.warning("내용을 입력해주세요.")
     else:
         client = get_groq_client()
-        response = client.chat.completions.create(
-            model="gemma2-9b-it",
-            messages=[
-                {"role": "system", "content": "너는 따뜻한 AI 심리상담사다."},
-                {"role": "user", "content": user_input},
-            ],
-        )
+       response = client.chat.completions.create(
+    model="gemma-7b-it",
+    messages=[
+        {"role": "system", "content": "너는 따뜻한 AI 심리상담사다."},
+        {"role": "user", "content": user_input},
+    ],
+)
+
         st.subheader("🧠 AI 상담 답변")
         st.write(response.choices[0].message["content"])
