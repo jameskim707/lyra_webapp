@@ -12,7 +12,8 @@ if st.button("상담 요청하기"):
     else:
         client = get_groq_client()
         response = client.chat.completions.create(
-            model="gemma-7b-it",
+           model="llama3-8b-8192",
+
             messages=[
                 {"role": "system", "content": "너는 따뜻한 AI 심리상담사다."},
                 {"role": "user", "content": user_input},
