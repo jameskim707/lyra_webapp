@@ -12,7 +12,8 @@ if st.button("진단하기"):
     else:
         client = get_groq_client()
         response = client.chat.completions.create(
-            model="gemma-7b-it",
+            model="llama3-8b-8192",
+
             messages=[
                 {"role": "system", "content": "너는 투자 중독 방지 전문가다."},
                 {"role": "user", "content": user_input},
