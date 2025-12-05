@@ -174,4 +174,4 @@ with col3:
     st.metric("활성 사용자", "89", "+12")
 
 with col4:
-    st.metric("만족도", "98%"
+ st.metric("만족도", "98%", "+2%")
