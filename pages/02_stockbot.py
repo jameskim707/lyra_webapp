@@ -11,12 +11,13 @@ if st.button("진단하기"):
         st.warning("먼저 내용을 입력해주세요.")
     else:
         client = get_groq_client()
-        response = client.chat.completions.create(
-            model="gemma2-9b-it",
-            messages=[
-                {"role": "system", "content": "당신은 투자 중독 방지 전문가입니다."},
-                {"role": "user", "content": user_input},
-            ],
-        )
+       response = client.chat.completions.create(
+    model="gemma-7b-it",
+    messages=[
+        {"role": "system", "content": "당신은 투자 중독 방지 전문가입니다."},
+        {"role": "user", "content": user_input},
+    ],
+)
+
         st.subheader("🧠 진단 결과")
         st.write(response.choices[0].message["content"])
