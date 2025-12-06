@@ -7,6 +7,7 @@ import streamlit as st
 import sys
 sys.path.append('..')
 from utils.groq_client import get_groq_client
+from utils.sidebar import render_common_sidebar, render_rest_sidebar
 from datetime import datetime
 
 st.set_page_config(
@@ -14,6 +15,10 @@ st.set_page_config(
     page_icon="🌙",
     layout="wide"
 )
+
+# 공통 사이드바
+render_common_sidebar(current_page='rest')
+render_rest_sidebar()
 
 # CSS
 st.markdown("""
@@ -33,14 +38,21 @@ st.markdown("""
     color: #4DB6AC;
     font-size: 0.9rem;
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
 }
 
 .status-safe {
     background: #d4edda;
     border-left: 4px solid #28a745;
     padding: 1rem;
-    border-radius: 5px;
+    border-radius: 10px;
     margin: 1rem 0;
 }
 
@@ -48,7 +60,7 @@ st.markdown("""
     background: #fff3cd;
     border-left: 4px solid #ffc107;
     padding: 1rem;
-    border-radius: 5px;
+    border-radius: 10px;
     margin: 1rem 0;
 }
 
@@ -56,7 +68,7 @@ st.markdown("""
     background: #f8d7da;
     border-left: 4px solid #dc3545;
     padding: 1rem;
-    border-radius: 5px;
+    border-radius: 10px;
     margin: 1rem 0;
 }
 </style>
@@ -65,7 +77,7 @@ st.markdown("""
 # 헤더
 st.markdown('<div class="main-header">🌙 GINI R.E.S.T.</div>', unsafe_allow_html=True)
 st.markdown('<div class="version-tag">v3.0 MIRACLE Edition</div>', unsafe_allow_html=True)
-st.markdown('<div style="text-align: center; color: #666; margin-bottom: 2rem;">정신건강 회복 AI 상담 시스템</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">정신건강 회복을 위한 AI 상담 시스템</div>', unsafe_allow_html=True)
 
 # Session State 초기화
 if 'rest_chat' not in st.session_state:
@@ -82,50 +94,14 @@ groq_client = get_groq_client()
 
 # 인트로
 st.info("""
-💡 **GINI R.E.S.T. MIRACLE는:**
-- 정신건강 회복을 위한 AI 상담 시스템입니다
-- 감정 패턴을 분석합니다 (E1~E5)
-- 위기 신호를 감지합니다
-- 강력한 개입으로 도와드립니다
+💡 **R.E.S.T.와 함께하면:**
+- 💬 자유롭게 마음을 이야기하세요 (설문지 ❌)
+- 🎯 감정 패턴을 분석합니다 (E1~E5)
+- 🚨 위기 신호를 조기 감지합니다
+- 💙 강력한 개입으로 도와드립니다
 """)
 
 st.markdown("---")
-
-# 사이드바 - 상태
-with st.sidebar:
-    st.markdown("### 📊 현재 상태")
-    
-    # 감정 레벨
-    e_score = st.session_state.emotion_score
-    e_colors = {1: "🟢", 2: "🟡", 3: "🟠", 4: "🔴", 5: "🚨"}
-    e_labels = {1: "안정", 2: "주의", 3: "위험", 4: "심각", 5: "위기"}
-    
-    st.metric(
-        "감정 레벨",
-        f"E{e_score}",
-        e_labels[e_score]
-    )
-    
-    st.markdown(f"{e_colors[e_score]} {e_labels[e_score]}")
-    
-    st.markdown("---")
-    
-    st.metric("위기 신호", f"{st.session_state.crisis_count}회", "최근 7일")
-    
-    st.markdown("---")
-    
-    if st.button("🗑️ 대화 내역 지우기", use_container_width=True):
-        st.session_state.rest_chat = []
-        st.rerun()
-    
-    st.markdown("---")
-    
-    st.markdown("""
-    **⚠️ 응급 연락처**
-    - 📞 1577-0199
-    - 📞 1393
-    - 📞 1588-9191
-    """)
 
 # 채팅 히스토리
 for msg in st.session_state.rest_chat:
@@ -156,7 +132,7 @@ if user_input:
     with st.chat_message("user"):
         st.write(user_input)
     
-    # 위기 키워드 체크 (간단 버전)
+    # 위기 키워드 체크
     crisis_keywords = ['죽고', '자살', '끝', '포기', '의미없', '소용없']
     has_crisis = any(keyword in user_input for keyword in crisis_keywords)
     
@@ -243,7 +219,7 @@ if user_input:
         }
     })
     
-    # 감정 점수 조정 (간단 버전)
+    # 감정 점수 조정
     if has_crisis:
         st.session_state.emotion_score = 5
     elif '힘들' in user_input or '우울' in user_input:
@@ -255,6 +231,20 @@ if user_input:
 
 # 안내
 st.markdown("---")
+
+if not st.session_state.rest_chat:
+    st.markdown("""
+    <div style="background: #e3f2fd; padding: 1.5rem; border-radius: 15px; border-left: 4px solid #2196f3;">
+    <h4 style="margin-top: 0;">💬 이렇게 시작해보세요:</h4>
+    <ul>
+    <li>"요즘 잠을 잘 못 자요"</li>
+    <li>"우울한 기분이 계속돼요"</li>
+    <li>"불안해서 힘들어요"</li>
+    <li>"아무것도 하기 싫어요"</li>
+    </ul>
+    <p style="margin-bottom: 0; color: #666;">💡 체크박스 설문이 아닌 자유로운 대화로 시작하세요!</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # 상태 표시
 e_score = st.session_state.emotion_score
