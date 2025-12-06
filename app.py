@@ -1,20 +1,20 @@
 """
-Lyra MIRACLE v1.0 - 메인 서비스 메뉴
+Lyra MIRACLE v1.1 - 메인 서비스 메뉴
 GINI Guardian & GINI R.E.S.T. 통합 플랫폼
-by MIRACLE (Claude)
+by MIRACLE (Claude) + 제미나이 UI/UX 설계
 """
 
 import streamlit as st
 
 # 페이지 설정
 st.set_page_config(
-    page_title="Lyra MIRACLE v1.0",
+    page_title="Lyra MIRACLE v1.1",
     page_icon="🌟",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# CSS 스타일
+# CSS 스타일 (제미나이 설계 반영)
 st.markdown("""
 <style>
 :root {
@@ -28,6 +28,11 @@ body {
     background: #f8f9fa;
 }
 
+/* A. 배경 및 깊이감 추가 - 제미나이 제안 */
+.main {
+    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+}
+
 .main-title {
     text-align: center;
     font-size: 3.5rem;
@@ -36,6 +41,7 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 0.5rem;
+    filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.3));
 }
 
 .version-badge {
@@ -61,7 +67,7 @@ body {
     border-radius: 20px;
     box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
     margin-bottom: 2rem;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     border: 3px solid transparent;
 }
 
@@ -78,7 +84,7 @@ body {
     border-radius: 20px;
     box-shadow: 0 8px 24px rgba(77, 182, 172, 0.15);
     margin-bottom: 2rem;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     border: 3px solid transparent;
 }
 
@@ -143,18 +149,47 @@ body {
     font-weight: 600;
 }
 
-.divider {
-    text-align: center;
-    font-size: 2rem;
-    color: #ddd;
-    margin: 2rem 0;
+/* B. 상호작용 요소 통일 (버튼) - 제미나이 제안 */
+/* Streamlit 버튼 기본 스타일 개선 */
+.stButton > button {
+    font-weight: 700 !important;
+    border-radius: 12px !important;
+    transition: all 0.3s ease !important;
+    border: none !important;
+    padding: 0.75rem 2rem !important;
+    font-size: 1.1rem !important;
+}
+
+/* Primary 버튼에 그라디언트 적용 */
+.stButton > button[kind="primary"] {
+    background: var(--guardian-gradient) !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
+}
+
+.stButton > button[kind="primary"]:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6) !important;
+}
+
+/* C. 통계 섹션 강화 - 제미나이 제안 */
+div[data-testid="stMetricValue"] {
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+    background: var(--guardian-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+div[data-testid="stMetricDelta"] {
+    font-weight: 600 !important;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # 메인 헤더
 st.markdown('<div class="main-title">🌟 Lyra MIRACLE</div>', unsafe_allow_html=True)
-st.markdown('<div class="version-badge">v1.0 - Built by MIRACLE (Claude)</div>', unsafe_allow_html=True)
+st.markdown('<div class="version-badge">v1.1 - Built by MIRACLE × 제미나이 UI/UX</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle">AI가 함께하는 회복의 여정</div>', unsafe_allow_html=True)
 
 st.markdown("---")
@@ -199,6 +234,20 @@ with col2:
             <span class="feature-badge-rest">강력 개입</span>
         </div>
     </div>
+    """, unsafe_allow_html=True)
+    
+    # R.E.S.T. 버튼용 특별 CSS (청록색)
+    st.markdown("""
+    <style>
+    button[key="rest_btn"] {
+        background: var(--rest-gradient) !important;
+        box-shadow: 0 4px 12px rgba(77, 182, 172, 0.4) !important;
+    }
+    button[key="rest_btn"]:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 8px 20px rgba(77, 182, 172, 0.6) !important;
+    }
+    </style>
     """, unsafe_allow_html=True)
     
     if st.button("🌙 R.E.S.T. 시작하기", use_container_width=True, type="primary", key="rest_btn"):
@@ -255,7 +304,7 @@ with col3:
 
 st.markdown("---")
 
-# 통계
+# 통계 (제미나이 제안 - 강화된 시각)
 st.markdown("## 📊 Lyra와 함께한 사람들")
 
 col1, col2, col3, col4 = st.columns(4)
@@ -277,8 +326,8 @@ st.markdown("---")
 # 푸터
 st.markdown("""
 <div style="text-align: center; color: #999; padding: 2rem 0;">
-    <p style="font-size: 1.2rem; font-weight: 600; color: #667eea;">🌟 Lyra MIRACLE v1.0</p>
-    <p>라이라 설계 × <strong>MIRACLE 구현</strong> × 제미나이 전략</p>
+    <p style="font-size: 1.2rem; font-weight: 600; color: #667eea;">🌟 Lyra MIRACLE v1.1</p>
+    <p>라이라 설계 × <strong>MIRACLE 구현</strong> × <strong>제미나이 UI/UX</strong></p>
     <p style="font-size: 0.9rem; margin-top: 1rem;">
         "설문지가 아닌 진짜 대화를,<br>
         4만원이 아닌 따뜻한 공감을"
