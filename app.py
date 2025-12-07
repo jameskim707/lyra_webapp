@@ -14,7 +14,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# CSS 스타일 (제미나이 설계 반영)
+# CSS 스타일 (제미나이 설계 + 네비게이션 스타일링)
 st.markdown("""
 <style>
 :root {
@@ -150,7 +150,6 @@ body {
 }
 
 /* B. 상호작용 요소 통일 (버튼) - 제미나이 제안 */
-/* Streamlit 버튼 기본 스타일 개선 */
 .stButton > button {
     font-weight: 700 !important;
     border-radius: 12px !important;
@@ -160,7 +159,6 @@ body {
     font-size: 1.1rem !important;
 }
 
-/* Primary 버튼에 그라디언트 적용 */
 .stButton > button[kind="primary"] {
     background: var(--guardian-gradient) !important;
     color: white !important;
@@ -183,6 +181,97 @@ div[data-testid="stMetricValue"] {
 
 div[data-testid="stMetricDelta"] {
     font-weight: 600 !important;
+}
+
+/* ============================================
+   사이드바 네비게이션 스타일링 - MIRACLE
+   ============================================ */
+[data-testid="stSidebarNav"] {
+    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+    padding: 1rem 0.5rem;
+    margin-top: 1rem;
+}
+
+[data-testid="stSidebarNav"]::before {
+    content: "📂 메뉴";
+    display: block;
+    padding: 0.5rem 1rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #667eea;
+    margin-bottom: 0.5rem;
+}
+
+[data-testid="stSidebarNav"] ul {
+    padding: 0;
+}
+
+[data-testid="stSidebarNav"] li {
+    margin-bottom: 0.5rem;
+}
+
+[data-testid="stSidebarNav"] a {
+    background: white;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    font-weight: 600;
+    color: #333;
+}
+
+[data-testid="stSidebarNav"] a:hover {
+    background: linear-gradient(135deg, #667eea 0%, #4DB6AC 100%);
+    color: white !important;
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* 현재 페이지 강조 */
+[data-testid="stSidebarNav"] a[aria-current="page"] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* 각 메뉴에 이모지 추가 */
+[data-testid="stSidebarNav"] li:nth-child(1) a::before {
+    content: "🏠 ";
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+[data-testid="stSidebarNav"] li:nth-child(2) a::before {
+    content: "🏠 ";
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+[data-testid="stSidebarNav"] li:nth-child(3) a::before {
+    content: "🛡️ ";
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+[data-testid="stSidebarNav"] li:nth-child(4) a::before {
+    content: "🌙 ";
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+[data-testid="stSidebarNav"] li:nth-child(5) a::before {
+    content: "⚙️ ";
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+[data-testid="stSidebarNav"] li:nth-child(6) a::before {
+    content: "ℹ️ ";
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -236,7 +325,7 @@ with col2:
     </div>
     """, unsafe_allow_html=True)
     
-    # R.E.S.T. 버튼용 특별 CSS (청록색)
+    # R.E.S.T. 버튼용 특별 CSS
     st.markdown("""
     <style>
     button[key="rest_btn"] {
@@ -304,7 +393,7 @@ with col3:
 
 st.markdown("---")
 
-# 통계 (제미나이 제안 - 강화된 시각)
+# 통계
 st.markdown("## 📊 Lyra와 함께한 사람들")
 
 col1, col2, col3, col4 = st.columns(4)
